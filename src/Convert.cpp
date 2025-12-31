@@ -1,5 +1,5 @@
 /*
- Copyright (C) Giuliano Catrambone (giuliano.catrambone@catrasoftware.it)
+ Copyright (C) Giuliano Catrambone (giulianocatrambone@gmail.com)
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -23,17 +23,17 @@
 
 #include "Convert.h"
 #include <assert.h>
-#include <cstring>
 #include <stdexcept>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
+#include <string.h>
 #include <vector>
 
-string Convert::base64_encode(const string &in)
+
+std::string Convert::base64_encode(const std::string &in)
 {
 
-	string out;
+	std::string out;
 
 	int val = 0, valb = -6;
 	for (unsigned char c : in)
@@ -53,10 +53,10 @@ string Convert::base64_encode(const string &in)
 	return out;
 }
 
-string Convert::base64_encode(const unsigned char *in, int length)
+std::string Convert::base64_encode(const unsigned char *in, int length)
 {
 
-	string out;
+	std::string out;
 
 	int val = 0, valb = -6;
 	for (int inIndex = 0; inIndex < length; inIndex++)
@@ -77,12 +77,12 @@ string Convert::base64_encode(const unsigned char *in, int length)
 	return out;
 }
 
-string Convert::base64_decode(const string &in)
+std::string Convert::base64_decode(const std::string &in)
 {
 
-	string out;
+	std::string out;
 
-	vector<int> T(256, -1);
+	std::vector<int> T(256, -1);
 	for (int i = 0; i < 64; i++)
 		T["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[i]] = i;
 
@@ -113,7 +113,7 @@ void Convert::binaryToBase16(
 
 	if (pucSrcBinaryData == (const unsigned char *)NULL || pDestBase16Data == (char *)NULL || ulSrcBinaryDataSize * 2 + 1 != ulDestBase16DataSize)
 	{
-		throw runtime_error(string("Invalid argument"));
+		throw std::runtime_error("Invalid argument");
 	}
 
 	memset((void *)pDestBase16Data, 0, ulDestBase16DataSize);
@@ -122,7 +122,7 @@ void Convert::binaryToBase16(
 
 	for (ulSrcIndex = 0; ulSrcIndex < ulSrcBinaryDataSize; ulSrcIndex++)
 	{
-		sprintf(&(pDestBase16Data[ulDestIndex]), "%02X", pucSrcBinaryData[ulSrcIndex]);
+		snprintf(&(pDestBase16Data[ulDestIndex]), ulDestBase16DataSize, "%02X", pucSrcBinaryData[ulSrcIndex]);
 		ulDestIndex += 2;
 	}
 }
@@ -139,7 +139,7 @@ void Convert::base16ToBinary(
 
 	if (pucDestBinaryData == (unsigned char *)NULL || pSrcBase16Data == (const char *)NULL || ulDestBinaryDataSize * 2 + 1 != ulSrcBase16DataSize)
 	{
-		throw runtime_error(string("Invalid argument"));
+		throw std::runtime_error("Invalid argument");
 	}
 
 	memset((void *)pucDestBinaryData, 0, ulDestBinaryDataSize);
@@ -167,14 +167,14 @@ void Convert::stringToBase16(const char *pSrcStringData, char *pDestBase16Data, 
 
 	if (pSrcStringData == (const char *)NULL || pDestBase16Data == (char *)NULL)
 	{
-		throw runtime_error(string("Invalid argument"));
+		throw std::runtime_error("Invalid argument");
 	}
 
 	ulSrcStringDataSize = strlen(pSrcStringData);
 
 	if (ulDestBase16DataSize < ulSrcStringDataSize * 2 + 1)
 	{
-		throw runtime_error(string("Invalid argument"));
+		throw std::runtime_error("Invalid argument");
 	}
 
 	memset((void *)pDestBase16Data, 0, ulDestBase16DataSize);
@@ -183,7 +183,7 @@ void Convert::stringToBase16(const char *pSrcStringData, char *pDestBase16Data, 
 
 	for (ulSrcIndex = 0; ulSrcIndex < ulSrcStringDataSize; ulSrcIndex++)
 	{
-		sprintf(&(pDestBase16Data[ulDestIndex]), "%02X", pSrcStringData[ulSrcIndex]);
+		snprintf(&(pDestBase16Data[ulDestIndex]), ulDestBase16DataSize, "%02X", pSrcStringData[ulSrcIndex]);
 		ulDestIndex += 2;
 	}
 }
@@ -199,14 +199,14 @@ void Convert::base16ToString(const char *pSrcBase16Data, char *pDestStringData, 
 
 	if (pDestStringData == (char *)NULL || pSrcBase16Data == (const char *)NULL)
 	{
-		throw runtime_error(string("Invalid argument"));
+		throw std::runtime_error("Invalid argument");
 	}
 
 	ulSrcBase16DataSize = strlen(pSrcBase16Data);
 
 	if (ulSrcBase16DataSize == 0 || ulDestStringDataSize < ulSrcBase16DataSize / 2 + 1)
 	{
-		throw runtime_error(string("Invalid argument"));
+		throw std::runtime_error("Invalid argument");
 	}
 
 	memset((void *)pDestStringData, 0, ulDestStringDataSize);

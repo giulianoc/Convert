@@ -1,6 +1,6 @@
 
 /*
- Copyright (C) Giuliano Catrambone (giuliano.catrambone@catrasoftware.it)
+ Copyright (C) Giuliano Catrambone (giulianocatrambone@gmail.com)
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -22,21 +22,19 @@
  with the authors.
 */
 
-#ifndef Convert_h
-#define Convert_h
+#pragma once
 
 #include <string>
-
-using namespace std;
 
 class Convert
 {
 
   public:
-	static string base64_encode(const string &in);
-	static string base64_encode(const unsigned char *in, int length);
 
-	static string base64_decode(const string &in);
+	static std::string base64_encode(const std::string &in);
+	static std::string base64_encode(const unsigned char *in, int length);
+
+	static std::string base64_decode(const std::string &in);
 
 	/**
 			pDestBase16Data must be already allocated:
@@ -71,6 +69,5 @@ class Convert
 					(SizeOfSrc / 2 + 1) characters
 	*/
 	static void base16ToString(const char *pSrcBase16Data, char *pDestStringData, unsigned long ulDestStringDataSize);
-};
 
-#endif
+};
