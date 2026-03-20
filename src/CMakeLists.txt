@@ -37,5 +37,8 @@ if(ZORAC)
 else()
 	install (TARGETS Convert DESTINATION lib)
 	install (FILES ${HEADERS} DESTINATION include)
+	if(NOT DEFINED CONVERT_INSTALL_HEADERS OR CONVERT_INSTALL_HEADERS)
+		install(FILES ${HEADERS} DESTINATION include)
+	endif()
 endif()
 
